@@ -24,7 +24,6 @@ public class Main {
 		br= new BufferedReader(new InputStreamReader(System.in));
 		bw= new BufferedWriter(new OutputStreamWriter(System.out));
 	}
-//g2
 
 	public static void main(String[] args) {
 		Main ui=new Main();
@@ -63,7 +62,6 @@ public class Main {
 		}
 	}
 
-	
 	public void hanoiTower(int n, Stack<Integer> t1,Stack<Integer> t2,Stack<Integer> t3) throws IOException {
 		if(n==1) {
 			t3.add(t1.pop());
@@ -77,8 +75,7 @@ public class Main {
 			hanoiTower(n-1, t2,t1,t3);
 		}
 	}
-	
-	
+		
 	public Stack<Integer> getT1() {
 		return t1;
 	}

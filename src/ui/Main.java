@@ -24,7 +24,7 @@ public class Main {
 		br= new BufferedReader(new InputStreamReader(System.in));
 		bw= new BufferedWriter(new OutputStreamWriter(System.out));
 	}
-
+//g2
 
 	public static void main(String[] args) {
 		Main ui=new Main();
@@ -38,11 +38,16 @@ public class Main {
 					ui.t1.add(temp);
 					temp--;
 				}
+				ui.bw.write(ui.t1.size()+" "+ui.t2.size()+" "+ui.t3.size());
+				ui.bw.newLine();
 				ui.hanoiTower(ui.numProblems.get(0), ui.t1, ui.t2, ui.t3);
 				ui.numProblems.remove(0);
 				m--;
+				ui.t1.clear();
+				ui.t2.clear();
+				ui.t3.clear();
 			}
-			
+			ui.bw.flush();
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,12 +64,17 @@ public class Main {
 	}
 
 	
-	public void hanoiTower(int n, Stack<Integer> t1,Stack<Integer> t2,Stack<Integer> t3) {
+	public void hanoiTower(int n, Stack<Integer> t1,Stack<Integer> t2,Stack<Integer> t3) throws IOException {
 		if(n==1) {
 			t3.add(t1.pop());
+			bw.write(this.t1.size()+" "+this.t2.size()+" "+this.t3.size());
+			bw.newLine();
 		}else {
 			hanoiTower(n-1, t1, t3,t2);
-			
+			t3.add(t1.pop());
+			bw.write(this.t1.size()+" "+this.t2.size()+" "+this.t3.size());
+			bw.newLine();
+			hanoiTower(n-1, t2,t1,t3);
 		}
 	}
 	

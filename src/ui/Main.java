@@ -47,7 +47,7 @@ public class Main {
 				ui.t2.clear();
 				ui.t3.clear();
 			}
-			ui.bw.flush();
+			ui.bw.close ();
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

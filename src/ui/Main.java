@@ -1,54 +1,37 @@
 package ui;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class Main {
 	private BufferedReader br;
-	private BufferedWriter bw;
+	PrintWriter pw;
 	private Stack<Integer> t1;
 	private Stack<Integer> t2;
 	private Stack<Integer> t3;
 	private ArrayList<Integer> numProblems;
 
-	public Main() {
+	public Main() throws FileNotFoundException {
+		br = new BufferedReader(new FileReader("data/input.csv"));
 		t1=new Stack<>();
 		t2=new Stack<>();
 		t3=new Stack<>();
 		numProblems= new ArrayList<>();
-		br= new BufferedReader(new InputStreamReader(System.in));
-		bw= new BufferedWriter(new OutputStreamWriter(System.out));
+		pw= new PrintWriter("data/output.csv");
 	}
 
 	public static void main(String[] args) {
-		Main ui=new Main();
-		int c=0;
+	
+		
 		try {
-			int m=Integer.parseInt(ui.br.readLine());
-			ui.towerProblem(m, c);
-			while(m!=0) {
-				int temp=ui.numProblems.get(0);
-				while(temp!=0) {
-					ui.t1.add(temp);
-					temp--;
-				}
-				ui.bw.write(ui.t1.size()+" "+ui.t2.size()+" "+ui.t3.size());
-				ui.bw.newLine();
-				ui.hanoiTower(ui.numProblems.get(0), ui.t1, ui.t2, ui.t3);
-				ui.numProblems.remove(0);
-				m--;
-				ui.t1.clear();
-				ui.t2.clear();
-				ui.t3.clear();
-			}
-			ui.bw.close ();
+			Main ui= new Main();
+			ui.importData();
 		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -65,13 +48,11 @@ public class Main {
 	public void hanoiTower(int n, Stack<Integer> t1,Stack<Integer> t2,Stack<Integer> t3) throws IOException {
 		if(n==1) {
 			t3.add(t1.pop());
-			bw.write(this.t1.size()+" "+this.t2.size()+" "+this.t3.size());
-			bw.newLine();
+			pw.println(this.t1.size()+" "+this.t2.size()+" "+this.t3.size());
 		}else {
 			hanoiTower(n-1, t1, t3,t2);
 			t3.add(t1.pop());
-			bw.write(this.t1.size()+" "+this.t2.size()+" "+this.t3.size());
-			bw.newLine();
+			pw.println(this.t1.size()+" "+this.t2.size()+" "+this.t3.size());
 			hanoiTower(n-1, t2,t1,t3);
 		}
 	}
@@ -99,4 +80,28 @@ public class Main {
 	public void setT3(Stack<Integer> t3) {
 		this.t3 = t3;
 	}
+	
+	public void importData() throws IOException {
+	int m=Integer.parseInt(br.readLine());
+	int c=0;
+	towerProblem(m, c);
+	while(m!=0) {
+		int temp=numProblems.get(0);
+		while(temp!=0) {
+			t1.add(temp);
+			temp--;
+		}
+		pw.println(t1.size()+" "+t2.size()+" "+t3.size());
+		hanoiTower(numProblems.get(0), t1, t2, t3);
+		numProblems.remove(0);
+		m--;
+		t1.clear();
+		t2.clear();
+		t3.clear();
+		pw.println();
+	}
+	br.close();
+	pw.close();
+	}
+
 }
